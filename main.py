@@ -1,4 +1,4 @@
 import re
-txt = "The rain in Spain"
-x = re.findall("a", txt)
+string = "What is a duck?"
+x = re.findall("a", string)
 print(x)
