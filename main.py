@@ -1,4 +1,4 @@
-import regex as re
+import re
 txt = "The rain in Spain"
 x = re.findall("a", txt)
 print(x)
