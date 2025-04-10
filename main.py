@@ -1,8 +1,8 @@
 import regex as re
-import math
+import httpcore
 
-print(math.pi())
-
+response = httpcore.request("GET", "https://www.example.com/")
+print(response)
 txt = "The rain in Spain"
 x = re.findall("a", txt)
 print(x)
