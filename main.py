@@ -1,33 +1,25 @@
-#full credit to ChatGPT for this code cause I didnt have time to write this out
-from js import alert, prompt, Math
+#Credit: https://www.programiz.com/python-programming/examples/fibonacci-sequence
+#Full credit to Programiz
+nterms = 20578
 
-def play_game():
-    target = int(Math.floor(Math.random() * 100) + 1)
-    attempts = 0
-    alert("Welcome to the Number Guessing Game!\nI'm thinking of a number between 1 and 100.")
-    
-    while True:
-        guess_str = prompt("Enter your guess (1-100):")
-        if guess_str is None:
-            alert("Game cancelled.")
-            break
-        
-        try:
-            guess = int(guess_str)
-        except ValueError:
-            alert("That's not a number. Try again!")
-            continue
+# first two terms
+n1, n2 = 0, 1
+count = 0
 
-        attempts += 1
-
-        if guess < 1 or guess > 100:
-            alert("Guess must be between 1 and 100.")
-        elif guess < target:
-            alert("Too low! Try again.")
-        elif guess > target:
-            alert("Too high! Try again.")
-        else:
-            alert(f"🎉 Correct! The number was {target}.\nYou guessed it in {attempts} tries.")
-            break
-
-play_game()
+# check if the number of terms is valid
+if nterms <= 0:
+   print("Please enter a positive integer")
+# if there is only one term, return n1
+elif nterms == 1:
+   print("Fibonacci sequence upto",nterms,":")
+   print(n1)
+# generate fibonacci sequence
+else:
+   print("Fibonacci sequence:")
+   while count < nterms:
+       print(n1)
+       nth = n1 + n2
+       # update values
+       n1 = n2
+       n2 = nth
+       count += 1
