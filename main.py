@@ -1,6 +1,7 @@
 #Credit: https://www.programiz.com/python-programming/examples/fibonacci-sequence
 #Full credit to Programiz
-nterms = 20578
+nterms = 100
+#limit is 20578, but don't do that, it will crash for a bit.
 
 # first two terms
 n1, n2 = 0, 1
