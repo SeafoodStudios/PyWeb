@@ -1,26 +1,109 @@
-#Credit: https://www.programiz.com/python-programming/examples/fibonacci-sequence
-#Full credit to Programiz
-nterms = 100
-#limit is 20578, but don't do that, it will crash for a bit.
+#Perplexity AI, 2025
 
-# first two terms
-n1, n2 = 0, 1
-count = 0
+print("Loading...")
+import js
+import random
+from pyodide.ffi import create_proxy
+# Clear the page and add a canvas
+js.document.body.innerHTML = ""
+canvas = js.document.createElement("canvas")
+canvas.width = 400
+canvas.height = 600
+js.document.body.appendChild(canvas)
+ctx = canvas.getContext("2d")
 
-# check if the number of terms is valid
-if nterms <= 0:
-   print("Please enter a positive integer")
-# if there is only one term, return n1
-elif nterms == 1:
-   print("Fibonacci sequence upto",nterms,":")
-   print(n1)
-# generate fibonacci sequence
-else:
-   print("Fibonacci sequence:")
-   while count < nterms:
-       print(n1)
-       nth = n1 + n2
-       # update values
-       n1 = n2
-       n2 = nth
-       count += 1
+class FlappyBirdGame:
+    def __init__(self):
+        self.bird_y = 300
+        self.bird_velocity = 0
+        self.gravity = 0.6
+        self.lift = -10
+        self.pipes = []
+        self.pipe_width = 60
+        self.pipe_gap = 150
+        self.frame_count = 0
+        self.score = 0
+        self.game_over = False
+
+    def update(self):
+        if self.game_over:
+            return
+        self.frame_count += 1
+        self.bird_velocity += self.gravity
+        self.bird_y += self.bird_velocity
+
+        # Add pipes every 90 frames
+        if self.frame_count % 90 == 0:
+            pipe_top = random.randint(50, 350)
+            self.pipes.append({'x': 400, 'top': pipe_top})
+
+        # Move pipes left
+        for pipe in self.pipes:
+            pipe['x'] -= 3
+
+        # Remove offscreen pipes and update score
+        if self.pipes and self.pipes[0]['x'] < -self.pipe_width:
+            self.pipes.pop(0)
+            self.score += 1
+
+        # Collision detection
+        for pipe in self.pipes:
+            if 100 > pipe['x'] and 100 < pipe['x'] + self.pipe_width:
+                if self.bird_y < pipe['top'] or self.bird_y > pipe['top'] + self.pipe_gap:
+                    self.game_over = True
+
+        # Check ground and ceiling
+        if self.bird_y > 580 or self.bird_y < 0:
+            self.game_over = True
+
+    def flap(self):
+        if not self.game_over:
+            self.bird_velocity = self.lift
+
+game = FlappyBirdGame()
+
+def draw():
+    # Clear background
+    ctx.fillStyle = "#70c5ce"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    # Draw bird
+    ctx.fillStyle = "yellow"
+    ctx.beginPath()
+    ctx.arc(100, game.bird_y, 15, 0, 2 * 3.14159)
+    ctx.fill()
+
+    # Draw pipes
+    ctx.fillStyle = "green"
+    for pipe in game.pipes:
+        # Top pipe
+        ctx.fillRect(pipe['x'], 0, game.pipe_width, pipe['top'])
+        # Bottom pipe
+        ctx.fillRect(pipe['x'], pipe['top'] + game.pipe_gap, game.pipe_width, canvas.height)
+
+    # Draw score
+    ctx.fillStyle = "white"
+    ctx.font = "30px Arial"
+    ctx.fillText(f"Score: {game.score}", 10, 50)
+
+    # Draw game over
+    if game.game_over:
+        ctx.fillStyle = "red"
+        ctx.font = "50px Arial"
+        ctx.fillText("Game Over", 100, 300)
+
+def game_loop(timestamp=None):
+    game.update()
+    draw()
+    js.requestAnimationFrame(game_loop)
+
+# Proxy for keydown event to detect space or up arrow and call flap
+def on_keydown(event):
+    if event.code == "Space" or event.code == "ArrowUp":
+        game.flap()
+
+keydown_proxy = create_proxy(on_keydown)
+js.window.addEventListener("keydown", keydown_proxy)
+
+# Start the game loop
+js.requestAnimationFrame(game_loop)
