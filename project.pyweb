@@ -1,10 +1,9 @@
 #Perplexity AI, 2025
-
-print("Loading...")
 import js
 import random
 from pyodide.ffi import create_proxy
-# Clear the page and add a canvas
+
+# Clear the page and add a canvas element
 js.document.body.innerHTML = ""
 canvas = js.document.createElement("canvas")
 canvas.width = 400
@@ -97,7 +96,7 @@ def game_loop(timestamp=None):
     draw()
     js.requestAnimationFrame(game_loop)
 
-# Proxy for keydown event to detect space or up arrow and call flap
+# Properly create a proxy for the keydown event handler and keep it alive
 def on_keydown(event):
     if event.code == "Space" or event.code == "ArrowUp":
         game.flap()
