@@ -5,5 +5,9 @@ This repository is to be used in many ways, so stay tuned!
 
 ### ***- SeafoodStudios***
 
-## PyWeb Example
+## PyWeb Projects
 PyWeb can be used in very advanced ways, but here is a simple [example](https://pyweb.seafoodstudios.com/SeafoodStudios/PyWeb)!
+You can explore projects [here](https://pyweb.seafoodstudios.com/explore.html).
+
+## PyWeb Sharing
+PyWeb projects can be shared by pressing the deploy button on your project, and following the instructions. To index it, go to the issues section of this repository and follow [these](https://github.com/SeafoodStudios/PyWeb/issues/1) instructions.
